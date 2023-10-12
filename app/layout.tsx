@@ -4,7 +4,6 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import type { Metadata } from "next";
 
 import "./globals.css";
-import { ThemeProvider } from "@/context/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,7 +42,7 @@ export default function RootLayout({
             },
           }}
         >
-          {/* <ThemeProvider>{children}</ThemeProvider> */}
+          {children}
         </ClerkProvider>
       </body>
     </html>
