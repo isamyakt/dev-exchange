@@ -1,8 +1,9 @@
 "use client";
+
 import {
   Sheet,
-  SheetClose,
   SheetContent,
+  SheetClose,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Image from "next/image";
@@ -14,6 +15,7 @@ import { usePathname } from "next/navigation";
 
 const NavContent = () => {
   const pathname = usePathname();
+
   return (
     <section className="flex h-full flex-col gap-6 pt-16">
       {sidebarLinks.map((item) => {
@@ -28,7 +30,7 @@ const NavContent = () => {
               className={`${
                 isActive
                   ? "primary-gradient rounded-lg text-light-900"
-                  : "text-drak300_light900"
+                  : "text-dark300_light900"
               } flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               <Image
@@ -54,7 +56,7 @@ const MobileNav = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Image
-          src="assets/icons/hamburger.svg"
+          src="/assets/icons/hamburger.svg"
           width={36}
           height={36}
           alt="Menu"
@@ -74,7 +76,7 @@ const MobileNav = () => {
           />
 
           <p className="h2-bold text-dark100_light900 font-spaceGrotesk">
-            Dev <span className="text-primary-500">Exchange</span>
+            Dev <span className="text-primary-500">Overflow</span>
           </p>
         </Link>
         <div>
@@ -94,7 +96,7 @@ const MobileNav = () => {
 
               <SheetClose asChild>
                 <Link href="/sign-up">
-                  <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+                  <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
                     Sign Up
                   </Button>
                 </Link>
