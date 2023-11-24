@@ -5,6 +5,45 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import Filter from "@/components/shared/Filter";
 import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/home/HomeFilters";
+import NoResult from "@/components/shared/NoResult";
+import QuestionCard from "@/components/cards/QuestionCard";
+
+const questions = [
+  {
+    _id: "1",
+    title: "Cascading Deletes in SQLAlchemy?",
+    tags: [
+      { _id: "1", name: "python" },
+      { _id: "2", name: "sql" },
+    ],
+    author: {
+      _id: "1",
+      name: "Palavi Rajude",
+      picture: "assets/icons/avatar.svg",
+    },
+    upvotes: 10,
+    views: 14,
+    answer: [],
+    createAt: new Date("2023-07-04T12:00:00.000Z"),
+  },
+  {
+    _id: "2",
+    title: "How to use traits in rust for fetching data?",
+    tags: [
+      { _id: "1", name: "rust" },
+      { _id: "2", name: "sql" },
+    ],
+    author: {
+      _id: "1",
+      name: "Samyakt Patil",
+      picture: "assets/icons/avatar.svg",
+    },
+    upvotes: 10,
+    views: 17,
+    answer: [],
+    createAt: new Date("2023-07-04T12:00:00.000Z"),
+  },
+];
 
 export default function Home() {
   return (
@@ -36,6 +75,33 @@ export default function Home() {
       </div>
 
       <HomeFilters />
+
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {questions.length > 0 ? (
+          questions.map((question) => (
+            <QuestionCard
+              key={question._id}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              author={question.author}
+              upvotes={question.upvotes}
+              views={question.views}
+              answer={question.answer}
+              createAt={question.createAt}
+            />
+          ))
+        ) : (
+          <NoResult
+            title="There'n no question to show"
+            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
+            discussion. Our query could be the next big thing others learn from. Get
+            involved! 💡"
+            link="/ask-question"
+            linkTitle="Ask a Question"
+          />
+        )}
+      </div>
     </>
   );
 }
