@@ -7,45 +7,13 @@ import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/home/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/cards/QuestionCard";
+import { getQuestions } from "@/lib/actions/question.action";
 
-const questions = [
-  {
-    _id: "1",
-    title: "Cascading Deletes in SQLAlchemy?",
-    tags: [
-      { _id: "1", name: "python" },
-      { _id: "2", name: "sql" },
-    ],
-    author: {
-      _id: "1",
-      name: "Palavi Rajude",
-      picture: "assets/icons/avatar.svg",
-    },
-    upvotes: 10,
-    views: 14,
-    answer: [],
-    createAt: new Date("2023-07-04T12:00:00.000Z"),
-  },
-  {
-    _id: "2",
-    title: "How to use traits in rust for fetching data?",
-    tags: [
-      { _id: "1", name: "rust" },
-      { _id: "2", name: "sql" },
-    ],
-    author: {
-      _id: "1",
-      name: "Samyakt Patil",
-      picture: "assets/icons/avatar.svg",
-    },
-    upvotes: 10,
-    views: 17,
-    answer: [],
-    createAt: new Date("2023-07-04T12:00:00.000Z"),
-  },
-];
+export default async function Home() {
+  const result = await getQuestions({});
 
-export default function Home() {
+  console.log(result.questions);
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -77,8 +45,8 @@ export default function Home() {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -88,7 +56,7 @@ export default function Home() {
               upvotes={question.upvotes}
               views={question.views}
               answer={question.answer}
-              createAt={question.createAt}
+              createdAt={question.createdAt}
             />
           ))
         ) : (
