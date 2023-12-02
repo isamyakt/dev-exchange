@@ -16,7 +16,7 @@ export async function getUserById(params: any) {
 
     const { userId } = params;
 
-    const user = await User.findOne({ clerkId: userId });
+    const user = (await User.findOne({ clerkId: userId })) as any;
 
     return user;
   } catch (error) {
@@ -74,11 +74,11 @@ export async function deleteUser(params: DeleteUserParams) {
     // const userQuestionIds = await Question.find({ auther: user._id }).distinct('_id');
 
     // delete user questions
-    await Question.deleteMany({ author: user });
+    await Question.deleteMany({ author: user._id });
 
     // TODO: delete user answers, comments, etc.
 
-    const deletedUser = await User.findByIdAndDelete(user);
+    const deletedUser = await User.findByIdAndDelete(user._id);
 
     return deletedUser;
   } catch (error) {
