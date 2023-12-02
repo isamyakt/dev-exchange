@@ -16,7 +16,7 @@ export async function getUserById(params: any) {
 
     const { userId } = params;
 
-    const user = (await User.findOne({ clerkId: userId })) as any;
+    const user = await User.findOne({ clerkId: userId });
 
     return user;
   } catch (error) {
@@ -61,7 +61,7 @@ export async function deleteUser(params: DeleteUserParams) {
 
     const { clerkId } = params;
 
-    const user = await User.findOneAndDelete({ clerkId });
+    const user = (await User.findOneAndDelete({ clerkId })) as any;
 
     if (!user) {
       throw new Error("User not found");
