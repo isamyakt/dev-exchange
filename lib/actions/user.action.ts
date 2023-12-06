@@ -11,6 +11,7 @@ import {
 import Question from "@/database/question.model";
 
 import { revalidatePath } from "next/cache";
+import Tag from "@/database/tag.model";
 
 export async function getUserById(params: any) {
   try {
@@ -98,6 +99,18 @@ export async function getAllUsers(params: GetAllTagsParams) {
     const users = await User.find({}).sort({ createAt: -1 });
 
     return { users };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllTags(params: GetAllTagsParams) {
+  try {
+    connectToDatabase();
+    const tags = await Tag.find({});
+
+    return { tags };
   } catch (error) {
     console.log(error);
     throw error;
