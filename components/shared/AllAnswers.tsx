@@ -1,4 +1,3 @@
-import React from "react";
 import Filter from "./Filter";
 import { AnswerFilters } from "@/constants/filters";
 import { getAnswers } from "@/lib/actions/answer.action";
@@ -10,7 +9,7 @@ import Votes from "./Votes";
 
 interface Props {
   questionId: string;
-  userId?: string; // TODO: remove `?`
+  userId: string;
   totalAnswers: number;
   page?: number;
   filter?: number;
@@ -18,7 +17,7 @@ interface Props {
 
 const AllAnswers = async ({
   questionId,
-  // userId,
+  userId,
   totalAnswers, // page, // filter,
 }: Props) => {
   const result = await getAnswers({
@@ -56,7 +55,15 @@ const AllAnswers = async ({
                   </div>
                 </Link>
                 <div className="flex justify-end">
-                  <Votes />
+                  <Votes
+                    type="Answer"
+                    itemId={JSON.stringify(answer._id)}
+                    userId={JSON.stringify(userId)}
+                    upvotes={answer.upvotes.length}
+                    hasupVoted={answer.upvotes.includes(userId)}
+                    downvotes={answer.downvotes.length}
+                    hasdownVoted={answer.downvotes.includes(userId)}
+                  />
                 </div>
               </div>
             </div>
