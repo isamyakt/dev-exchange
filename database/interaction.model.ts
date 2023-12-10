@@ -10,8 +10,8 @@ export interface IInteraction extends Document {
 }
 
 const InteractionSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: "User", require: true },
-  action: { type: String, require: true },
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  action: { type: String, required: true },
   question: { type: Schema.Types.ObjectId, ref: "Question" },
   answer: { type: Schema.Types.ObjectId, ref: "Answer" },
   tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
