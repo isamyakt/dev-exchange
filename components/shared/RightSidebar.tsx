@@ -2,28 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 
 import RenderTag from "./RenderTag";
+import { getHotQuestions } from "@/lib/actions/question.action";
+import { getTopPopularTags } from "@/lib/actions/tag.action";
 
-const hotQuestions = [
-  { _id: "1", title: "How to I use express as a custom server in NextJS?" },
-  { _id: "2", title: "Cascading Deletes in SQLAlchemy?" },
-  { _id: "3", title: "How to perfectly center a div with tailwind css?" },
-  {
-    _id: "4",
-    title:
-      "Best practices for data fetching in a Next.js application with server-side rendering (SSR)?",
-  },
-  { _id: "5", title: "Redux Toolkit not updating state as expected?" },
-];
+const RightSidebar = async () => {
+  const hotQuestions = await getHotQuestions();
+  const popularTags = await getTopPopularTags();
 
-const popularTags = [
-  { _id: "1", name: "typescript", totalQuestions: 3 },
-  { _id: "2", name: "rust", totalQuestions: 7 },
-  { _id: "3", name: "c/c++", totalQuestions: 4 },
-  { _id: "4", name: "reactjs", totalQuestions: 3 },
-  { _id: "5", name: "nextjs", totalQuestions: 2 },
-];
-
-const RightSidebar = () => {
   return (
     <section className="background-light900_dark200 light-border custom-scrollbar sticky right-0 top-0 flex h-screen w-[350px] flex-col overflow-y-auto border-l p-6 pt-36 shadow-light-300 dark:shadow-none max-xl:hidden">
       <div>
@@ -57,7 +42,7 @@ const RightSidebar = () => {
               key={tag._id}
               _id={tag._id}
               name={tag.name}
-              totalQuestions={tag.totalQuestions}
+              totalQuestions={tag.numberOfQuestions}
               showCount
             />
           ))}
