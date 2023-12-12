@@ -5,7 +5,7 @@ import { connectToDatabase } from "../mongoose";
 import {
   CreateUserParams,
   DeleteUserParams,
-  GetAllTagsParams,
+  GetAllUsersParams,
   GetSavedQuestionsParams,
   GetUserByIdParams,
   GetUserStatsParams,
@@ -96,7 +96,7 @@ export async function deleteUser(params: DeleteUserParams) {
   }
 }
 
-export async function getAllUsers(params: GetAllTagsParams) {
+export async function getAllUsers(params: GetAllUsersParams) {
   try {
     connectToDatabase();
 
@@ -105,18 +105,6 @@ export async function getAllUsers(params: GetAllTagsParams) {
     const users = await User.find({}).sort({ createAt: -1 });
 
     return { users };
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
-
-export async function getAllTags(params: GetAllTagsParams) {
-  try {
-    connectToDatabase();
-    const tags = await Tag.find({});
-
-    return { tags };
   } catch (error) {
     console.log(error);
     throw error;
@@ -164,7 +152,8 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase();
 
-    const { clerkId, searchQuery } = params;
+    // eslint-disable-next-line no-unused-vars
+    const { clerkId, page = 1, pageSize = 10, filter, searchQuery } = params;
 
     const query: FilterQuery<typeof Question> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
