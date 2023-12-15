@@ -186,8 +186,9 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase();
 
-    // eslint-disable-next-line no-unused-vars
-    const { clerkId, page = 1, pageSize = 10, filter, searchQuery } = params;
+    const { clerkId, searchQuery, filter, page = 1, pageSize = 10 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof Question> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
@@ -203,13 +204,13 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
         sortOptions = { createdAt: 1 };
         break;
       case "most_voted":
-        sortOptions = { upvotes: -1 }; // 9  -> 7 -> 4 -> 1
+        sortOptions = { upvotes: -1 };
         break;
       case "most_viewed":
         sortOptions = { views: -1 };
         break;
       case "most_answered":
-        sortOptions = { answer: -1 };
+        sortOptions = { answers: -1 };
         break;
       default:
         break;
@@ -220,12 +221,16 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
       match: query,
       options: {
         sort: sortOptions,
+        skip: skipAmount,
+        limit: pageSize + 1,
       },
       populate: [
-        { path: "tags", model: Tag, select: "_id name " },
-        { path: "author", model: User, select: "_id clerkId name picture " },
+        { path: "tags", model: Tag, select: "_id name" },
+        { path: "author", model: User, select: "_id clerkId name picture" },
       ],
     });
+
+    const isNext = user.saved.length > pageSize;
 
     if (!user) {
       throw new Error("User not found");
@@ -233,7 +238,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
 
     const savedQuestions = user.saved;
 
-    return { questions: savedQuestions };
+    return { questions: savedQuestions, isNext };
   } catch (error) {
     console.log(error);
     throw error;
