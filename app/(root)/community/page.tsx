@@ -5,6 +5,7 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { UserFilters } from "@/constants/filters";
 import { getAllUsers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
+// import Loading from "./loading";
 
 import Link from "next/link";
 
@@ -14,6 +15,9 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
     filter: searchParams.filter,
     page: searchParams.page ? +searchParams.page : 1,
   });
+
+  // const isLoading = true;
+  // if (isLoading) return <Loading />;
 
   return (
     <>
