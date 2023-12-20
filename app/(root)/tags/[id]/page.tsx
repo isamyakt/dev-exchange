@@ -17,7 +17,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
     <>
       <h1 className="h1-bold text-dark100_light900">{result.tagTilte}</h1>
 
-      <div className="mt-11 w-full">
+      <div className="mt-11 w-full text-dark300_light700">
         <LocalSearchbar
           route={`/tags/${params.id}`}
           iconPosition="left"
